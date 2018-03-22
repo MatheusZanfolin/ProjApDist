@@ -29,6 +29,7 @@ namespace ClienteRestful
          */
     public partial class frmPrincipal : Form
     {
+        private static string URI = "";
         public frmPrincipal()
         {
             InitializeComponent();
@@ -45,6 +46,16 @@ namespace ClienteRestful
         }
 
         private void gbDados_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSelecionar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAlterar_Click(object sender, EventArgs e)
         {
 
         }
