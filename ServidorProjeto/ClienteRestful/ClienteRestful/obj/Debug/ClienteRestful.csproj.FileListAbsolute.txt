@@ -1,0 +1,5 @@
+C:\Temp\AplDis\ProjetoProjeto\Projeto\ClienteRestful\ClienteRestful\obj\Debug\ClienteRestful.csprojResolveAssemblyReference.cache
+C:\Temp\AplDis\ProjetoProjeto\Projeto\ClienteRestful\ClienteRestful\obj\Debug\ClienteRestful.frmPrincipal.resources
+C:\Temp\AplDis\ProjetoProjeto\Projeto\ClienteRestful\ClienteRestful\obj\Debug\ClienteRestful.Properties.Resources.resources
+C:\Temp\AplDis\ProjetoProjeto\Projeto\ClienteRestful\ClienteRestful\obj\Debug\ClienteRestful.csproj.GenerateResource.Cache
+C:\Temp\AplDis\ProjetoProjeto\Projeto\ClienteRestful\ClienteRestful\obj\Debug\ClienteRestful.csproj.CoreCompileInputs.cache
