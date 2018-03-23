@@ -60,6 +60,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnEscolher = new System.Windows.Forms.Button();
+            this.rbTodos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).BeginInit();
             this.gbOpcoes.SuspendLayout();
             this.gbCriterios.SuspendLayout();
@@ -123,17 +125,18 @@
             // 
             // gbOpcoes
             // 
+            this.gbOpcoes.Controls.Add(this.rbTodos);
+            this.gbOpcoes.Controls.Add(this.btnEscolher);
             this.gbOpcoes.Controls.Add(this.rbDeletar);
             this.gbOpcoes.Controls.Add(this.rbSelecionar);
             this.gbOpcoes.Controls.Add(this.rbInserir);
             this.gbOpcoes.Controls.Add(this.rbAlterar);
             this.gbOpcoes.Location = new System.Drawing.Point(12, 11);
             this.gbOpcoes.Name = "gbOpcoes";
-            this.gbOpcoes.Size = new System.Drawing.Size(200, 110);
+            this.gbOpcoes.Size = new System.Drawing.Size(200, 168);
             this.gbOpcoes.TabIndex = 1;
             this.gbOpcoes.TabStop = false;
             this.gbOpcoes.Text = "Selecione uma opção....";
-            this.gbOpcoes.Enter += new System.EventHandler(this.gbOpcoes_Enter);
             // 
             // rbDeletar
             // 
@@ -142,13 +145,13 @@
             this.rbDeletar.Name = "rbDeletar";
             this.rbDeletar.Size = new System.Drawing.Size(108, 17);
             this.rbDeletar.TabIndex = 5;
-            this.rbDeletar.TabStop = true;
             this.rbDeletar.Text = "Excluir um projeto";
             this.rbDeletar.UseVisualStyleBackColor = true;
             // 
             // rbSelecionar
             // 
             this.rbSelecionar.AutoSize = true;
+            this.rbSelecionar.Checked = true;
             this.rbSelecionar.Location = new System.Drawing.Point(15, 19);
             this.rbSelecionar.Name = "rbSelecionar";
             this.rbSelecionar.Size = new System.Drawing.Size(127, 17);
@@ -164,7 +167,6 @@
             this.rbInserir.Name = "rbInserir";
             this.rbInserir.Size = new System.Drawing.Size(105, 17);
             this.rbInserir.TabIndex = 4;
-            this.rbInserir.TabStop = true;
             this.rbInserir.Text = "Inserir um projeto";
             this.rbInserir.UseVisualStyleBackColor = true;
             // 
@@ -175,7 +177,6 @@
             this.rbAlterar.Name = "rbAlterar";
             this.rbAlterar.Size = new System.Drawing.Size(107, 17);
             this.rbAlterar.TabIndex = 3;
-            this.rbAlterar.TabStop = true;
             this.rbAlterar.Text = "Alterar um projeto";
             this.rbAlterar.UseVisualStyleBackColor = true;
             // 
@@ -188,14 +189,14 @@
             this.gbCriterios.Controls.Add(this.rbNome);
             this.gbCriterios.Location = new System.Drawing.Point(218, 11);
             this.gbCriterios.Name = "gbCriterios";
-            this.gbCriterios.Size = new System.Drawing.Size(200, 141);
+            this.gbCriterios.Size = new System.Drawing.Size(200, 168);
             this.gbCriterios.TabIndex = 2;
             this.gbCriterios.TabStop = false;
-            this.gbCriterios.Text = "Selecione um critério....";
+            this.gbCriterios.Text = "Selecione por um critério....";
             // 
             // btnSelecionar
             // 
-            this.btnSelecionar.Location = new System.Drawing.Point(44, 112);
+            this.btnSelecionar.Location = new System.Drawing.Point(49, 139);
             this.btnSelecionar.Name = "btnSelecionar";
             this.btnSelecionar.Size = new System.Drawing.Size(75, 23);
             this.btnSelecionar.TabIndex = 6;
@@ -205,24 +206,24 @@
             // 
             // txtCriterio
             // 
-            this.txtCriterio.Location = new System.Drawing.Point(76, 77);
+            this.txtCriterio.Location = new System.Drawing.Point(15, 104);
             this.txtCriterio.Name = "txtCriterio";
-            this.txtCriterio.Size = new System.Drawing.Size(100, 20);
+            this.txtCriterio.Size = new System.Drawing.Size(179, 20);
             this.txtCriterio.TabIndex = 5;
             // 
             // lblCriterio
             // 
             this.lblCriterio.AutoSize = true;
-            this.lblCriterio.Location = new System.Drawing.Point(12, 77);
+            this.lblCriterio.Location = new System.Drawing.Point(12, 88);
             this.lblCriterio.Name = "lblCriterio";
-            this.lblCriterio.Size = new System.Drawing.Size(42, 13);
+            this.lblCriterio.Size = new System.Drawing.Size(84, 13);
             this.lblCriterio.TabIndex = 4;
-            this.lblCriterio.Text = "Critério:";
+            this.lblCriterio.Text = "Valor do Critério:";
             // 
             // rbCódigo
             // 
             this.rbCódigo.AutoSize = true;
-            this.rbCódigo.Location = new System.Drawing.Point(15, 19);
+            this.rbCódigo.Location = new System.Drawing.Point(15, 22);
             this.rbCódigo.Name = "rbCódigo";
             this.rbCódigo.Size = new System.Drawing.Size(109, 17);
             this.rbCódigo.TabIndex = 2;
@@ -233,7 +234,7 @@
             // rbNome
             // 
             this.rbNome.AutoSize = true;
-            this.rbNome.Location = new System.Drawing.Point(15, 42);
+            this.rbNome.Location = new System.Drawing.Point(15, 54);
             this.rbNome.Name = "rbNome";
             this.rbNome.Size = new System.Drawing.Size(104, 17);
             this.rbNome.TabIndex = 3;
@@ -262,7 +263,6 @@
             this.gbDados.TabIndex = 3;
             this.gbDados.TabStop = false;
             this.gbDados.Text = "Preencha as informações abaixo:";
-            this.gbDados.Enter += new System.EventHandler(this.gbDados_Enter);
             // 
             // btnAlterar
             // 
@@ -375,6 +375,27 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Nome do projeto:";
             // 
+            // btnEscolher
+            // 
+            this.btnEscolher.Location = new System.Drawing.Point(47, 139);
+            this.btnEscolher.Name = "btnEscolher";
+            this.btnEscolher.Size = new System.Drawing.Size(75, 23);
+            this.btnEscolher.TabIndex = 6;
+            this.btnEscolher.Text = "Escolher";
+            this.btnEscolher.UseVisualStyleBackColor = true;
+            this.btnEscolher.Click += new System.EventHandler(this.btnEscolher_Click);
+            // 
+            // rbTodos
+            // 
+            this.rbTodos.AutoSize = true;
+            this.rbTodos.Location = new System.Drawing.Point(15, 112);
+            this.rbTodos.Name = "rbTodos";
+            this.rbTodos.Size = new System.Drawing.Size(158, 17);
+            this.rbTodos.TabIndex = 7;
+            this.rbTodos.TabStop = true;
+            this.rbTodos.Text = "Selecionar todos os projetos";
+            this.rbTodos.UseVisualStyleBackColor = true;
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -432,6 +453,8 @@
         private System.Windows.Forms.ComboBox cbxAluno1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbxAluno0;
+        private System.Windows.Forms.Button btnEscolher;
+        private System.Windows.Forms.RadioButton rbTodos;
     }
 }
 
