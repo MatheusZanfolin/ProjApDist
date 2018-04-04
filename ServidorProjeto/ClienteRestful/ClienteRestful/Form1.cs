@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ServidorProjeto.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -172,37 +173,93 @@ namespace ClienteRestful
             resp = await cliente.GetAsync(URI);
             if (resp.IsSuccessStatusCode)
             {
+                LimparTabela();
                 var ProjetoJsonString = await resp.Content.ReadAsStringAsync();
                 dgvDados.DataSource = JsonConvert.DeserializeObject<Projeto[]>(ProjetoJsonString).ToList();
             }
             else
             {
-                MessageBox.Show("Erro de conexão!")
+                MessageBox.Show("Erro de conexão!");
             }
         }
         private async void Selecionar(Criterio filtro, string valor)
         {
             BindingSource bsDados = new BindingSource();
-            if(filtro==Criterio.Nome)
+           if(filtro == Criterio.Nome)
+            {
+                parametroURI = valor; //esta linha está errada
+
+            }
+            if (filtro == Criterio.Codigo)
+            {
+                parametroURI = valor;//esta linha está errada
+
+            }
             resp = await cliente.GetAsync(URI + "/" + parametroURI);
             if (resp.IsSuccessStatusCode)
             {
+
+                LimparTabela();
                 var ProjetoJsonString = await resp.Content.ReadAsStringAsync();
-                bsDados.DataSource = JsonConvert.DeserializeObject<Projeto>(ProjetoJsonString);
-                dgvDados.DataSource = bsDados;
+                    bsDados.DataSource = JsonConvert.DeserializeObject<Projeto>(ProjetoJsonString);
+                    dgvDados.DataSource = bsDados;
             }
             else
             {
-                MessageBox.Show("Falha ao obter o aluno : " + resp.StatusCode);
+               throw new Exception("Falha ao obter o aluno : " + resp.StatusCode);
             }
+            
         }
         private async void Deletar(Criterio filtro, string valor)
         {
 
+            if (filtro == Criterio.Nome) //esta parte está errada
+                parametroURI = valor;
+            if(filtro == Criterio.Codigo)
+                parametroURI = valor;
+            resp = await cliente.DeleteAsync(URI + "/" + parametroURI);
+            if (resp.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Aluno foi excluído!");
+            }
+            else
+            {
+                MessageBox.Show("Falha ao excluir o aluno : " + resp.StatusCode);
+            }
         }
         private async void PrepararDadosGroupBox()
         {
 
+        }
+
+        private void txtNome_Leave(object sender, EventArgs e)
+        {
+            try
+            {
+                string nome = txtNome.Text;
+                
+                try
+                {
+                    //verificações
+                    Selecionar(Criterio.Nome, nome);
+
+                }
+                catch
+                {
+                    MessageBox.Show("Não foi possível encontrar este projeto! Por favor, verifique o nome e tente novamente!")
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Não foi possível encontrar este projeto! Por favor, verifique o nome e tente novamente!")
+            }
+        }
+        private void LimparTabela()
+        {
+            int numLinhas = dgvDados.Rows.Count;
+            for (int i = numLinhas - 1; i >= 0; i--)
+                dgvDados.Rows.RemoveAt(i);
         }
     }
 

@@ -34,7 +34,17 @@ namespace ServidorProjeto.Models
 
         public void DeleteProjeto(int codProjeto)
         {
-            throw new NotImplementedException();
+            conexao = new SqlConnection(Properties.Resources.ConnectionString);
+
+            var cmd = new SqlCommand("deletaProjeto_sp", conexao);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@codProjeto", codProjeto);
+
+            conexao.Close();
+
+            projetos.RemoveAll(x => x.CodProjeto == codProjeto);
         }
 
         public IEnumerable<Aluno> GetAlunos(string nomeProjeto)
@@ -159,6 +169,8 @@ namespace ServidorProjeto.Models
             }
             else
                 throw new Exception("ProjetoRepositorio: POST de projeto com alunos ou professores inexistentes.");
+
+            projetos.Add(p);
         }
 
         public void PutProjeto(Projeto p, IEnumerable<Aluno> alunos, IEnumerable<Professor> professores)
@@ -175,6 +187,20 @@ namespace ServidorProjeto.Models
             if (!projetos.Exists(x => x.CodProjeto == p.CodProjeto))
                 throw new Exception("ProjetoRepositorio: alteração de projeto com código inválido");
 
+            conexao = new SqlConnection(Properties.Resources.ConnectionString);
+
+            var alteraProj = new SqlCommand("alteraProjeto_sp", conexao);
+
+            alteraProj.Parameters.AddWithValue("@codProjeto" , p.CodProjeto);
+            alteraProj.Parameters.AddWithValue("@nomeProjeto", p.Nome);
+            alteraProj.Parameters.AddWithValue("@descricao"  , p.Descricao);
+            alteraProj.Parameters.AddWithValue("@ano"        , p.Ano);
+
+            if (alteraProj.ExecuteNonQuery() < 1)
+                throw new Exception("ProjetoRepositorio: erro de BD no PUT de projeto (alteração de projeto).");
+
+            conexao.Close();
+
             foreach (Aluno a in alunos)
             {
                 conexao = new SqlConnection(Properties.Resources.ConnectionString);
@@ -187,10 +213,31 @@ namespace ServidorProjeto.Models
                 cmd.Parameters.AddWithValue("@ra", a.RA);
 
                 if (cmd.ExecuteNonQuery() < 1)
-                    throw new Exception("ProjetoRepositorio: erro de BD no PUT de projeto.");
+                    throw new Exception("ProjetoRepositorio: erro de BD no PUT de projeto (alteração de aluno).");
 
                 conexao.Close();
-            }            
+            }
+
+            foreach (Professor prof in professores)
+            {
+                conexao = new SqlConnection(Properties.Resources.ConnectionString);
+
+                var cmd = new SqlCommand("relacionaProjetoProfessor_sp", conexao);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@codProjeto", p.CodProjeto);
+                cmd.Parameters.AddWithValue("@codProfessor", prof.CodProfessor);
+
+                if (cmd.ExecuteNonQuery() < 1)
+                    throw new Exception("ProjetoRepositorio: erro de BD no PUT de projeto (alteração de professor).");
+
+                conexao.Close();
+            }
+
+            projetos.RemoveAll(x => x.CodProjeto == p.CodProjeto);
+
+            projetos.Add(p);
         }
 
         public IEnumerable<Projeto> TodosOsProjetos()
@@ -200,12 +247,12 @@ namespace ServidorProjeto.Models
 
         private bool ExistemProfessores(IEnumerable<Professor> professores)
         {
-            throw new NotImplementedException();
+            return true; //TODO
         }
 
         private bool ExistemAlunos(IEnumerable<Aluno> alunos)
         {
-            throw new NotImplementedException();
+            return true; //TODO
         }
 
         public List<Projeto> Projetos

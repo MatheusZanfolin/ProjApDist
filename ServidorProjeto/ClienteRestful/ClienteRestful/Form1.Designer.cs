@@ -36,6 +36,8 @@
             this.alunosProjeto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.profProjeto = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gbOpcoes = new System.Windows.Forms.GroupBox();
+            this.rbTodos = new System.Windows.Forms.RadioButton();
+            this.btnEscolher = new System.Windows.Forms.Button();
             this.rbDeletar = new System.Windows.Forms.RadioButton();
             this.rbSelecionar = new System.Windows.Forms.RadioButton();
             this.rbInserir = new System.Windows.Forms.RadioButton();
@@ -58,10 +60,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbxAluno0 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtNome = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnEscolher = new System.Windows.Forms.Button();
-            this.rbTodos = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).BeginInit();
             this.gbOpcoes.SuspendLayout();
             this.gbCriterios.SuspendLayout();
@@ -137,6 +137,27 @@
             this.gbOpcoes.TabIndex = 1;
             this.gbOpcoes.TabStop = false;
             this.gbOpcoes.Text = "Selecione uma opção....";
+            // 
+            // rbTodos
+            // 
+            this.rbTodos.AutoSize = true;
+            this.rbTodos.Location = new System.Drawing.Point(15, 112);
+            this.rbTodos.Name = "rbTodos";
+            this.rbTodos.Size = new System.Drawing.Size(158, 17);
+            this.rbTodos.TabIndex = 7;
+            this.rbTodos.TabStop = true;
+            this.rbTodos.Text = "Selecionar todos os projetos";
+            this.rbTodos.UseVisualStyleBackColor = true;
+            // 
+            // btnEscolher
+            // 
+            this.btnEscolher.Location = new System.Drawing.Point(47, 139);
+            this.btnEscolher.Name = "btnEscolher";
+            this.btnEscolher.Size = new System.Drawing.Size(75, 23);
+            this.btnEscolher.TabIndex = 6;
+            this.btnEscolher.Text = "Escolher";
+            this.btnEscolher.UseVisualStyleBackColor = true;
+            this.btnEscolher.Click += new System.EventHandler(this.btnEscolher_Click);
             // 
             // rbDeletar
             // 
@@ -255,7 +276,7 @@
             this.gbDados.Controls.Add(this.label3);
             this.gbDados.Controls.Add(this.cbxAluno0);
             this.gbDados.Controls.Add(this.label2);
-            this.gbDados.Controls.Add(this.textBox1);
+            this.gbDados.Controls.Add(this.txtNome);
             this.gbDados.Controls.Add(this.label1);
             this.gbDados.Location = new System.Drawing.Point(424, 11);
             this.gbDados.Name = "gbDados";
@@ -359,12 +380,13 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Aluno 1:";
             // 
-            // textBox1
+            // txtNome
             // 
-            this.textBox1.Location = new System.Drawing.Point(109, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(121, 20);
-            this.textBox1.TabIndex = 5;
+            this.txtNome.Location = new System.Drawing.Point(109, 18);
+            this.txtNome.Name = "txtNome";
+            this.txtNome.Size = new System.Drawing.Size(121, 20);
+            this.txtNome.TabIndex = 5;
+            this.txtNome.Leave += new System.EventHandler(this.txtNome_Leave);
             // 
             // label1
             // 
@@ -374,27 +396,6 @@
             this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "Nome do projeto:";
-            // 
-            // btnEscolher
-            // 
-            this.btnEscolher.Location = new System.Drawing.Point(47, 139);
-            this.btnEscolher.Name = "btnEscolher";
-            this.btnEscolher.Size = new System.Drawing.Size(75, 23);
-            this.btnEscolher.TabIndex = 6;
-            this.btnEscolher.Text = "Escolher";
-            this.btnEscolher.UseVisualStyleBackColor = true;
-            this.btnEscolher.Click += new System.EventHandler(this.btnEscolher_Click);
-            // 
-            // rbTodos
-            // 
-            this.rbTodos.AutoSize = true;
-            this.rbTodos.Location = new System.Drawing.Point(15, 112);
-            this.rbTodos.Name = "rbTodos";
-            this.rbTodos.Size = new System.Drawing.Size(158, 17);
-            this.rbTodos.TabIndex = 7;
-            this.rbTodos.TabStop = true;
-            this.rbTodos.Text = "Selecionar todos os projetos";
-            this.rbTodos.UseVisualStyleBackColor = true;
             // 
             // frmPrincipal
             // 
@@ -434,7 +435,7 @@
         private System.Windows.Forms.RadioButton rbNome;
         private System.Windows.Forms.GroupBox gbDados;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn codProjeto;
         private System.Windows.Forms.DataGridViewTextBoxColumn nomeProjeto;

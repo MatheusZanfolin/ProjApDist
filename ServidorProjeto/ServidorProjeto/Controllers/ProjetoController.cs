@@ -8,10 +8,16 @@ using System.Web.Http;
 
 namespace ServidorProjeto.Controllers
 {
+    [RoutePrefix("api/projetos")]
     public class ProjetoController : ApiController
     {
-        ProjetoRepositorio repositorio = new ProjetoRepositorio();
+        static readonly ProjetoRepositorio repositorio = new ProjetoRepositorio();
 
-        //TODO: todo o resto :P
+        [AcceptVerbs("GET")]
+        [Route("GetTodosOsProjetos")]
+        public IEnumerable<Projeto> TodosOsProjetos()
+        {
+            return repositorio.TodosOsProjetos();
+        }
     }
 }

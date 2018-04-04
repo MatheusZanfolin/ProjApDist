@@ -28,6 +28,27 @@ namespace ServidorProjeto.Models
             Descricao  = descricao;
             Ano        = ano;
         }
+        public Projeto(int codProjeto, string nome, string descricao, int ano, string alunos, string professores)
+        {
+            if (codProjeto < 1)
+                throw new ArgumentException("Projeto: Código menor que 1");
+
+            if (string.IsNullOrEmpty(nome))
+                throw new ArgumentNullException("Projeto: nome não foi fornecido");
+
+            if (string.IsNullOrEmpty(descricao))
+                throw new ArgumentNullException("Projeto: descricao não foi fornecida");
+
+            if (ano < 1)
+                throw new ArgumentException("Projeto: ano inválido");
+
+            setAlunos(alunos);
+            setProfessores(professores);
+            CodProjeto = codProjeto;
+            nome = Nome;
+            Descricao = descricao;
+            Ano = ano;
+        }
 
         public Projeto(string nome, string descricao, int ano)
         {
@@ -45,10 +66,85 @@ namespace ServidorProjeto.Models
             Descricao = descricao;
             Ano = ano;
         }
+        public void SetAlunos(string alunos)
+        {
+            int qtdAlunos = 0;
+            List<string> listaAlunos = new List<string>();
+            if (listaAlunos.Count > 0) {
+                string atual = listaAlunos[0].ToString();
+                int i;
+                for (i = 1; i < alunos.Length; i++)
+                {
+                    if (alunos[i] == ',')
+                    {
+                        listaAlunos.Add(atual);
+                        atual = "";
+                        qtdAlunos++;
+                        continue;
+                    }
+                    if (alunos[i-1] == ',')
+                    {
 
-        public int CodProjeto   { get; private set; }
-        public string Nome      { get; private set; }
-        public string Descricao { get; private set; }
-        public int Ano          { get; private set; }
+                        atual = alunos[i].ToString();
+                        continue;
+                    }
+                    atual += alunos[i];
+                }
+                if (alunos[i - 1] != ',')
+                {
+                    listaAlunos.Add(atual);
+                    atual = "";
+                    qtdAlunos++;
+                }
+                this.Alunos = new string[qtdAlunos];
+                for(int j = 0; j < qtdAlunos; j++)
+                {
+                    this.Alunos[j] = listaAlunos[j];
+                }
+            }
+        }
+        public void SetProfessores(string professores)
+        {
+            int qtdProfessores = 0;
+            List<string> listaProfessores = new List<string>();
+            if (listaProfessores.Count > 0)
+            {
+                string atual = listaProfessores[0].ToString();
+                int i;
+                for (i = 1; i < Professores.Length; i++)
+                {
+                    if (professores[i] == ',')
+                    {
+                        listaProfessores.Add(atual);
+                        atual = "";
+                        qtdProfessores++;
+                        continue;
+                    }
+                    if (professores[i - 1] == ',')
+                    {
+                        atual = Professores[i].ToString();
+                        continue;
+                    }
+                    atual += Professores[i];
+                }
+                if (professores[i - 1] != ',')
+                {
+                    listaProfessores.Add(atual);
+                    atual = "";
+                    qtdProfessores++;
+                }
+                this.Professores = new string[qtdProfessores];
+                for (int j = 0; j < qtdProfessores; j++)
+                {
+                    this.Professores[j] = listaProfessores[j];
+                }
+            }
+        }
+        public int CodProjeto       { get; private set; }
+        public string Nome          { get; private set; }
+        public string Descricao     { get; private set; }
+        public int Ano              { get; private set; }
+        public string[] Alunos      { get; private set; }
+        public string[] Professores { get; private set; }
     }
 }
