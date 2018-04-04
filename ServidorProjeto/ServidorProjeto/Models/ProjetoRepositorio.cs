@@ -153,7 +153,7 @@ namespace ServidorProjeto.Models
                 cmd.Parameters.AddWithValue("@ano", p.Ano);
 
                 if (cmd.ExecuteNonQuery() < 1)
-                    throw new Exception("ProjetoRepositorio: erro no POST de projeto.");
+                    throw new Exception("ProjetoRepositorio: erro de BD no POST de projeto.");
 
                 conexao.Close();
             }
@@ -163,7 +163,34 @@ namespace ServidorProjeto.Models
 
         public void PutProjeto(Projeto p, IEnumerable<Aluno> alunos, IEnumerable<Professor> professores)
         {
-            throw new NotImplementedException();
+            if (p == null)
+                throw new ArgumentNullException("ProjetoRepositorio: o projeto para PUT é nulo.");
+
+            if (alunos == null)
+                throw new ArgumentNullException("ProjetoRepositorio: lista de alunos para PUT de projeto é nulo.");
+
+            if (professores == null)
+                throw new ArgumentNullException("ProjetoRepositorio: lista de professores para PUT de projeto é nulo.");
+
+            if (!projetos.Exists(x => x.CodProjeto == p.CodProjeto))
+                throw new Exception("ProjetoRepositorio: alteração de projeto com código inválido");
+
+            foreach (Aluno a in alunos)
+            {
+                conexao = new SqlConnection(Properties.Resources.ConnectionString);
+
+                var cmd = new SqlCommand("relacionaProjetoAluno_sp", conexao);
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@codProjeto", p.CodProjeto);
+                cmd.Parameters.AddWithValue("@ra", a.RA);
+
+                if (cmd.ExecuteNonQuery() < 1)
+                    throw new Exception("ProjetoRepositorio: erro de BD no PUT de projeto.");
+
+                conexao.Close();
+            }            
         }
 
         public IEnumerable<Projeto> TodosOsProjetos()
