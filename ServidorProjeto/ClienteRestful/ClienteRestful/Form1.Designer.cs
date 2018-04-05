@@ -302,6 +302,7 @@
             this.cbxProf1.Name = "cbxProf1";
             this.cbxProf1.Size = new System.Drawing.Size(121, 21);
             this.cbxProf1.TabIndex = 15;
+            this.cbxProf1.Leave += new System.EventHandler(this.cbxProf0_Leave);
             // 
             // label6
             // 
@@ -319,6 +320,7 @@
             this.cbxProf0.Name = "cbxProf0";
             this.cbxProf0.Size = new System.Drawing.Size(121, 21);
             this.cbxProf0.TabIndex = 13;
+            this.cbxProf0.Leave += new System.EventHandler(this.cbxProf0_Leave);
             // 
             // label5
             // 
@@ -336,6 +338,7 @@
             this.cbxAluno2.Name = "cbxAluno2";
             this.cbxAluno2.Size = new System.Drawing.Size(121, 21);
             this.cbxAluno2.TabIndex = 11;
+            this.cbxAluno2.Leave += new System.EventHandler(this.cbxAluno0_Leave);
             // 
             // label4
             // 
@@ -353,6 +356,7 @@
             this.cbxAluno1.Name = "cbxAluno1";
             this.cbxAluno1.Size = new System.Drawing.Size(121, 21);
             this.cbxAluno1.TabIndex = 9;
+            this.cbxAluno1.Leave += new System.EventHandler(this.cbxAluno0_Leave);
             // 
             // label3
             // 
@@ -370,6 +374,7 @@
             this.cbxAluno0.Name = "cbxAluno0";
             this.cbxAluno0.Size = new System.Drawing.Size(121, 21);
             this.cbxAluno0.TabIndex = 7;
+            this.cbxAluno0.Leave += new System.EventHandler(this.cbxAluno0_Leave);
             // 
             // label2
             // 

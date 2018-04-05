@@ -245,8 +245,8 @@ namespace ClienteRestful
                     atual = OrganizarProjeto();
                     LimparTabela();
                     
-                    SelecionarAlunos();
-                    SelecionarProfessores();
+                    SelecionarAlunosAsync();
+                    SelecionarProfessoresAsync();
                 }
                 catch
                 {
@@ -275,17 +275,82 @@ namespace ClienteRestful
                                      dgvDados.Rows[0].Cells[5].Value.ToString());      //professores
             return p;
         }
-        private void SelecionarAlunos()
+        private async Task SelecionarAlunosAsync()
         {
+            
             cbxAluno0.Items[0] = atual.Alunos[0];
             cbxAluno1.Items[0] = atual.Alunos[1];
             cbxAluno2.Items[0] = atual.Alunos[2];
+            int indAluno = 1;
+            BindingSource bsDados = new BindingSource();
+            parametroURI = parametroURI;
+            resp = await cliente.GetAsync(URI + "/" + parametroURI);
+            if (resp.IsSuccessStatusCode)
+            {
+
+                LimparTabela();
+                var ProjetoJsonString = await resp.Content.ReadAsStringAsync();
+                bsDados.DataSource = JsonConvert.DeserializeObject<Aluno[]>(ProjetoJsonString);
+                for(bsDados.Position = 1; bsDados.Position < bsDados.Count; bsDados.Position++)
+                {
+                    if (!atual.ContemAluno(((Aluno)bsDados.Current).ToString()))
+                    {
+                        cbxAluno0.Items[indAluno] = bsDados.Current.ToString();
+                        cbxAluno1.Items[indAluno] = bsDados.Current.ToString();
+                        cbxAluno2.Items[indAluno] = bsDados.Current.ToString();
+                        indAluno++;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Falha ao obter o aluno : " + resp.StatusCode);
+            }
         }
-        private void SelecionarProfessores()
+        private async Task SelecionarProfessoresAsync()
         {
-            cbxAluno0.Items[0] = atual.Alunos[0];
-            cbxAluno1.Items[0] = atual.Alunos[1];
+            cbxProf0.Items[0] = atual.Professores[0];
+            cbxProf1.Items[0] = atual.Professores[1];
+            int indProf = 1;
+            BindingSource bsDados = new BindingSource();
+            parametroURI = parametroURI;
+            resp = await cliente.GetAsync(URI + "/" + parametroURI);
+            if (resp.IsSuccessStatusCode)
+            {
+
+                LimparTabela();
+                var ProjetoJsonString = await resp.Content.ReadAsStringAsync();
+                bsDados.DataSource = JsonConvert.DeserializeObject<Professor[]>(ProjetoJsonString);
+                for (bsDados.Position = 1; bsDados.Position < bsDados.Count; bsDados.Position++)
+                {
+                    if (!atual.ContemAluno(((Professor)bsDados.Current).ToString()))
+                    {
+                        cbxProf0.Items[indProf] = bsDados.Current.ToString();
+                        cbxProf1.Items[indProf] = bsDados.Current.ToString();
+                        indProf++;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Falha ao obter o professor : " + resp.StatusCode);
+            }
         }
 
+        private void cbxAluno0_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbxProf0_Leave(object sender, EventArgs e)
+        {
+            int comboAlt = 1s;
+            string novoProf = cbxProf1.SelectedItem.ToString();
+            if (sender.Equals(cbxProf0)) {
+                comboAlt = 0;
+                novoProf = cbxProf0.SelectedItem.ToString();
+            }
+
+        }
     }
 }
