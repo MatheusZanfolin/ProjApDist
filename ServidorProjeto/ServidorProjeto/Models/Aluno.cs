@@ -45,7 +45,10 @@ namespace ServidorProjeto.Models
             Email = email;
             CodProjeto = SEM_PROJETO;
         }
-
+        public string ToString()
+        {
+            return Nome;
+        }
         public string RA { get; private set; }
         public string Nome { get; private set; }
         public string Email { get; private set; }

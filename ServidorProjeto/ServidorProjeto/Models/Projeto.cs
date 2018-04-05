@@ -24,7 +24,7 @@ namespace ServidorProjeto.Models
                 throw new ArgumentException("Projeto: ano inválido");
 
             CodProjeto = codProjeto;
-            nome       = Nome;
+            Nome       = nome;
             Descricao  = descricao;
             Ano        = ano;
         }
@@ -42,8 +42,8 @@ namespace ServidorProjeto.Models
             if (ano < 1)
                 throw new ArgumentException("Projeto: ano inválido");
 
-            setAlunos(alunos);
-            setProfessores(professores);
+            SetAlunos(alunos);
+            SetProfessores(professores);
             CodProjeto = codProjeto;
             nome = Nome;
             Descricao = descricao;
@@ -139,6 +139,25 @@ namespace ServidorProjeto.Models
                     this.Professores[j] = listaProfessores[j];
                 }
             }
+        }
+        public bool ContemAluno(string aluno)
+        {
+            for(int i=0;i< Alunos.Length; i++)
+            {
+                if (Alunos[i] != aluno)
+                    return false;
+            }
+            return true;
+
+        }
+        public bool ContemProfessor(string professor)
+        {
+            for (int i = 0; i < Professores.Length; i++)
+            {
+                if (Professores[i] != professor)
+                    return false;
+            }
+            return true;
         }
         public int CodProjeto       { get; private set; }
         public string Nome          { get; private set; }
