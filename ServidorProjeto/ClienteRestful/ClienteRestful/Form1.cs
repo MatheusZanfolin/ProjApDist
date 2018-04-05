@@ -33,12 +33,12 @@ namespace ClienteRestful
     public partial class frmPrincipal : Form
     {
         private static string portaLocal = "11515";
-        private string URI = "http://localhost:" + portaLocal + "/api/";
+        private static string URI = "http://localhost:" + portaLocal + "/api/";
         private string parametroURI;
         private int id = 1;//só vou usar na hora de consultar todos
         HttpClient cliente = new HttpClient();
         HttpResponseMessage resp = new HttpResponseMessage();
-
+        private Projeto atual;
         enum Criterio
         {
             Codigo,
@@ -52,7 +52,7 @@ namespace ClienteRestful
             Delete,
             Todos
         };
-        
+
         public frmPrincipal()
         {
             InitializeComponent();
@@ -80,7 +80,7 @@ namespace ClienteRestful
                         Deletar(CriterioSelecionado(), valorCriterio);
                         break;
                 }
-                
+
             }
             catch
             {
@@ -108,7 +108,7 @@ namespace ClienteRestful
 
             }
         }
-       
+
         private void btnEscolher_Click(object sender, EventArgs e)
         {
             try
@@ -185,7 +185,7 @@ namespace ClienteRestful
         private async void Selecionar(Criterio filtro, string valor)
         {
             BindingSource bsDados = new BindingSource();
-           if(filtro == Criterio.Nome)
+            if (filtro == Criterio.Nome)
             {
                 parametroURI = valor; //esta linha está errada
 
@@ -201,21 +201,21 @@ namespace ClienteRestful
 
                 LimparTabela();
                 var ProjetoJsonString = await resp.Content.ReadAsStringAsync();
-                    bsDados.DataSource = JsonConvert.DeserializeObject<Projeto>(ProjetoJsonString);
-                    dgvDados.DataSource = bsDados;
+                bsDados.DataSource = JsonConvert.DeserializeObject<Projeto>(ProjetoJsonString);
+                dgvDados.DataSource = bsDados;
             }
             else
             {
-               throw new Exception("Falha ao obter o aluno : " + resp.StatusCode);
+                throw new Exception("Falha ao obter o aluno : " + resp.StatusCode);
             }
-            
+
         }
         private async void Deletar(Criterio filtro, string valor)
         {
 
             if (filtro == Criterio.Nome) //esta parte está errada
                 parametroURI = valor;
-            if(filtro == Criterio.Codigo)
+            if (filtro == Criterio.Codigo)
                 parametroURI = valor;
             resp = await cliente.DeleteAsync(URI + "/" + parametroURI);
             if (resp.IsSuccessStatusCode)
@@ -237,12 +237,16 @@ namespace ClienteRestful
             try
             {
                 string nome = txtNome.Text;
-                
+
                 try
                 {
                     //verificações
                     Selecionar(Criterio.Nome, nome);
-
+                    atual = OrganizarProjeto();
+                    LimparTabela();
+                    
+                    SelecionarAlunos();
+                    SelecionarProfessores();
                 }
                 catch
                 {
@@ -261,6 +265,27 @@ namespace ClienteRestful
             for (int i = numLinhas - 1; i >= 0; i--)
                 dgvDados.Rows.RemoveAt(i);
         }
-    }
+        private Projeto OrganizarProjeto()
+        {
+            Projeto p = new Projeto(Convert.ToInt32(dgvDados.Rows[0].Cells[0].Value),  //codProjeto
+                                     dgvDados.Rows[0].Cells[1].Value.ToString(),       //nome
+                                     dgvDados.Rows[0].Cells[2].Value.ToString(),       //descrição
+                                     Convert.ToInt32(dgvDados.Rows[0].Cells[3].Value), //ano
+                                     dgvDados.Rows[0].Cells[4].Value.ToString(),       //alunos
+                                     dgvDados.Rows[0].Cells[5].Value.ToString());      //professores
+            return p;
+        }
+        private void SelecionarAlunos()
+        {
+            cbxAluno0.Items[0] = atual.Alunos[0];
+            cbxAluno1.Items[0] = atual.Alunos[1];
+            cbxAluno2.Items[0] = atual.Alunos[2];
+        }
+        private void SelecionarProfessores()
+        {
+            cbxAluno0.Items[0] = atual.Alunos[0];
+            cbxAluno1.Items[0] = atual.Alunos[1];
+        }
 
+    }
 }
